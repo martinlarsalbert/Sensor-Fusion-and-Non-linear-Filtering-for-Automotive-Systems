@@ -24,11 +24,18 @@ n_states = length(x_0);
 X = zeros(n_states,N+1);
 
 mu_q = zeros(n_states,1);
+
+qs = zeros(n_states,N+1);
+
 q = mvnrnd(mu_q,Q)';
+qs(:,1) = q; % Saving the random...
+
 X(:,1) = x_0 + q;
 
 for k=2:N+1
     q = mvnrnd(mu_q,Q)';
+    qs(:,k-1) = q; % Saving the random...
+
     x = X(:,k-1);
     [fx,A] = f(x);
     

@@ -23,13 +23,15 @@ N=N_-1;
 Y = zeros(m,N);
 mu_r = zeros(m,1);
 
+
+
 for k=1:N
     
     r = mvnrnd(mu_r,R)';
     x = X(:,k+1);
     [hx, Hx] = h(x);
     Y(:,k) = hx + r;
-    
+
 end
 
 end

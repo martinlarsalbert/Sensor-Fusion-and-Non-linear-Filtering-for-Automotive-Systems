@@ -18,6 +18,7 @@ P_sqrt = sqrtm(P);
         case 'UKF'
     
             W_0 = 1 - n/3; % x is Gaussian
+            
             N = 2*n+1;
             
             %Calculate sigma points:
