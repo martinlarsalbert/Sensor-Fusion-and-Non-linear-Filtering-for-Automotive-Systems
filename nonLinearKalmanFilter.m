@@ -37,7 +37,10 @@ Pf = zeros(n,n,N);
 x_prior = x_0;
 P_prior = P_0;
 
-[xf(:,1), Pf(:,:,1)] = nonLinKFupdate(x_prior,P_prior, Y(:,1), h, R, type);
+%[xf(:,1), Pf(:,:,1)] = nonLinKFupdate(x_prior,P_prior, Y(:,1), h, R, type);
+
+xf(:,1) = x_0;
+pf(:,:,1) = P_prior;
 
 for k=2:N    
     

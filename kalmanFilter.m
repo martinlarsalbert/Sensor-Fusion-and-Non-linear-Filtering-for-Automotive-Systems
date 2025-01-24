@@ -24,29 +24,43 @@ m = size(Y,1);
 %% Data allocation
 X = zeros(n,N);
 P = zeros(n,n,N);
+    
+%% Solution 1
+
+%x_prior = x_0;
+%P_prior = P_0;
+%[X(:,1), P(:,:,1)] = linearUpdate(x_prior,P_prior, Y(:,1), H, R);
+%for k=2:N    
+%   
+%   [x_prd,P_prd] = linearPrediction(X(:,k-1), P(:,:,k-1), A, Q);
+%   [X(:,k), P(:,:,k)] = linearUpdate(x_prd,P_prd, Y(:,k), H, R);
+%end
+%% Solution 2
 
 %X(:,1) = x_0;
 %P(:,:,1) = P_0;
-x_prior = x_0;
-P_prior = P_0;
-
-%for k=1:N    
-%    [X(:,k),P(:,:,k)] = linearUpdate(x_prd,P_prd, Y(:,k), H, R);
-%    [x_prd,P_prd] = linearPrediction(X(:,k), P(:,:,k), A, Q);
+%
+%[X(:,1), P(:,:,1)] = linearUpdate(x_0,P_0, Y(:,1), H, R);
+%
+%for k=2:N    
+%    
+%    [x_prd,P_prd] = linearPrediction(X(:,k-1), P(:,:,k-1), A, Q);
+%    [X(:,k), P(:,:,k)] = linearUpdate(x_prd,P_prd, Y(:,k), H, R);
+%
 %end
 
-[X(:,1), P(:,:,1)] = linearUpdate(x_prior,P_prior, Y(:,1), H, R);
+%% Solution 3
 
-for k=2:N    
+x_prd = x_0;
+P_prd = P_0;
+
+for k=1:N    
     
-    [x_prd,P_prd] = linearPrediction(X(:,k-1), P(:,:,k-1), A, Q);
     [X(:,k), P(:,:,k)] = linearUpdate(x_prd,P_prd, Y(:,k), H, R);
-
+    [x_prd,P_prd] = linearPrediction(X(:,k), P(:,:,k), A, Q);
+    
 end
 
-%for k=1:N    
-%    [x_prd,P_prd] = linearPrediction(X(:,k), P(:,:,k), A, Q);
-%    [X(:,k),P(:,:,k)] = linearUpdate(x_prd,P_prd, Y(:,k), H, R);
-%end
+
 
 
