@@ -16,7 +16,14 @@ function [X_k, W_k] = pfFilterStep(X_kmin1, W_kmin1, yk, proc_f, proc_Q, meas_h,
 
 % Your code here!
 
-expectedMeasurements  = meas_h(X_kmin1);
+% Prediction step
+N = length(W_kmin1);  % Number of particles
+X_k = proc_f(X_kmin1);
+X_k = X_k + mvnrnd([0, 0], proc_Q, N)'; % Add process noise
+
+
+% Update step
+expectedMeasurements  = meas_h(X_k);
 measurementErrors = expectedMeasurements - yk; % Calculate errors
 
 
@@ -28,9 +35,6 @@ likelihoods = exp(-0.5 * (measurementErrors.^2) / meas_R);
 weights = W_kmin1 .* likelihoods;
 W_k = weights / sum(weights); % Normalize weights
 
-% Number of particles
-N = length(W_kmin1);
-X_k = proc_f(X_kmin1);
-X_k = X_k + mvnrnd([0, 0], proc_Q, N)'; % Add process noise
+
 
 end

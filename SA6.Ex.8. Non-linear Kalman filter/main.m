@@ -56,8 +56,8 @@ R = diag([pi/360, pi/360].^2);  % Case 1
 
 Y = genNonLinearMeasurementSequence(X, h, R);
 
-type='CKF';
-%type='EKF';
+% type='CKF';
+type='EKF';
 [xf, Pf, xp, Pp] = nonLinearKalmanFilter(Y, x_0, P_0, f, Q, h, R, type);
 
 %% Check consistency (SA6.12)

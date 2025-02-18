@@ -2,6 +2,10 @@
 % Test PF filter and compare with Kalman filter output. Generate 2D state sequence (CV, pos and vel) and 1D measurement sequence (pos) and compare
 % outputs with Kalman filter.
 
+clear all;
+close all;
+clc;
+
 % Set prior
 sigma = 2;
 x_0 = [0 1]';
@@ -14,9 +18,9 @@ K = 20;
 
 % Models
 A = [1 0.1; 0 1];
-Q = [0 0; 0 0.5];
+Q = [0 0; 0 0.01];
 H = [1 0];
-R = 1;
+R = 0.1;
 
 m = 1;
 
@@ -51,20 +55,33 @@ plotFunc = @(k, Xk, Xkmin1, Wk, j) (0); % Define dummy function that does nothin
                                   N, true, plotFunc);
 
 
+figure();
+plot(X(1,:), 'k-', 'DisplayName','True');
+hold on;
+plot(Y, 'm--', 'DisplayName','Measure');
+plot(Xf(1,:), 'c', 'DisplayName','Kalman filter');
+plot(xfp(1,:), 'r', 'DisplayName','SIS');
+plot(xfpr(1,:),'g', 'DisplayName','SIR');
+
+legend();
+
+figure();
 %plot(X(2,:));
 %plot(X(1,:));
-%plot(X(1,:), X(2,:));
-%hold on;
+plot(X(1,:), X(2,:),'k-', 'DisplayName','True');
+hold on;
 %plot(Xf(2,:), 'c');
 %plot(Xf(1,:), 'c');
-%plot(Xf(1,:), Xf(2,:), 'c');
+plot(Xf(1,:), Xf(2,:), 'c', 'DisplayName','Kalman filter');
 %plot(xfp(2,:), 'r');
 %plot(xfpr(2,:), 'g');
 %plot(xfp(1,:), 'r');
 %plot(xfpr(1,:), 'g');
-%plot(xfp(1,:), xfp(2,:), 'r');
-%plot(xfpr(1,:), xfpr(2,:),'g');
+plot(xfp(1,:), xfp(2,:), 'r', 'DisplayName','SIS');
+plot(xfpr(1,:), xfpr(2,:),'g', 'DisplayName','SIR');
 %hold off;
+legend();
+
 
 % Compute means and covariances for each particle filter output
 
